@@ -41,10 +41,11 @@ public class SpringSecurityConfig {
                                 .authorizeHttpRequests(
                                                 authRequest -> authRequest
                                                                 // Permitir
-                                                                .requestMatchers("/auth/**")
-                                                                .permitAll()
-                                                                .requestMatchers("/graphql")
-                                                                .authenticated())
+                                                                .requestMatchers("**").permitAll())
+                                // .requestMatchers("/auth/**")
+                                // .permitAll()
+                                // .requestMatchers("/graphql")
+                                // .authenticated())
                                 .csrf(csrf -> csrf.disable())
                                 .cors(cors -> cors.configurationSource(corsConfigurationSource()))
                                 .addFilter(new JwtAuthenticationFilter(autentificationManager()))
@@ -66,17 +67,3 @@ public class SpringSecurityConfig {
                 return source;
         }
 }
-
-// @Bean
-// CorsConfigurationSource corsConfigurationSource() {
-// CorsConfiguration config = new CorsConfiguration();
-// config.setAllowedOriginPatterns(Arrays.asList("*"));
-// config.setAllowedMethods(Arrays.asList("GET", "POST", "DELETE", "PUT"));
-// config.setAllowedHeaders(Arrays.asList("Authorization", "Content-Type"));
-// config.setAllowCredentials(true);
-
-// UrlBasedCorsConfigurationSource source = new
-// UrlBasedCorsConfigurationSource();
-// source.registerCorsConfiguration("/**", config);
-// return source;
-// }
