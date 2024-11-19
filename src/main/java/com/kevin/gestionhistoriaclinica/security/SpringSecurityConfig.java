@@ -40,6 +40,7 @@ public class SpringSecurityConfig {
                 return http
                                 .authorizeHttpRequests(
                                                 authRequest -> authRequest
+                                                                // Permitir
                                                                 .requestMatchers("/auth/**")
                                                                 .permitAll()
                                                                 .requestMatchers("/graphql")
