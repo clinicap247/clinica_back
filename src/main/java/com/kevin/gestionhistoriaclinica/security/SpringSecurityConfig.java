@@ -5,6 +5,7 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration;
+import org.springframework.security.config.annotation.method.configuration.EnableMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -17,10 +18,8 @@ import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 import com.kevin.gestionhistoriaclinica.security.filter.JwtAuthenticationFilter;
 import com.kevin.gestionhistoriaclinica.security.filter.JwtValidationFilter;
 
-import lombok.RequiredArgsConstructor;
-
 @Configuration
-@RequiredArgsConstructor
+@EnableMethodSecurity(prePostEnabled = true)
 public class SpringSecurityConfig {
         @Autowired
         private AuthenticationConfiguration authenticationConfiguration;
@@ -36,21 +35,20 @@ public class SpringSecurityConfig {
         }
 
         @Bean
-        SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
+        SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
                 return http
                                 .authorizeHttpRequests(
                                                 authRequest -> authRequest
                                                                 // Permitir
-                                                                .requestMatchers("**").permitAll())
-                                // .requestMatchers("/auth/**")
-                                // .permitAll()
-                                // .requestMatchers("/graphql")
-                                // .authenticated())
-                                .csrf(csrf -> csrf.disable())
-                                .cors(cors -> cors.configurationSource(corsConfigurationSource()))
+                                                                .requestMatchers("/auth/**")
+                                                                .permitAll()
+                                                                .requestMatchers("/graphql")
+                                                                .authenticated())
                                 .addFilter(new JwtAuthenticationFilter(autentificationManager()))
                                 .addFilter(new JwtValidationFilter(autentificationManager()))
-                                .sessionManagement(sessionManager -> sessionManager
+                                .csrf(csrf -> csrf.disable())
+                                .cors(cors -> cors.configurationSource(corsConfigurationSource()))
+                                .sessionManagement(manegement -> manegement
                                                 .sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                                 .build();
         }

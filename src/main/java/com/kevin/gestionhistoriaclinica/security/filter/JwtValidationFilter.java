@@ -1,7 +1,5 @@
 package com.kevin.gestionhistoriaclinica.security.filter;
 
-import static com.kevin.gestionhistoriaclinica.security.TokenJwtConfig.*;
-
 import java.io.IOException;
 import java.util.Arrays;
 import java.util.Collection;
@@ -18,6 +16,10 @@ import org.springframework.security.web.authentication.www.BasicAuthenticationFi
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.kevin.gestionhistoriaclinica.security.SimpleGrantedAuthorityJsonCreator;
+import static com.kevin.gestionhistoriaclinica.security.TokenJwtConfig.CONTENT_TYPE;
+import static com.kevin.gestionhistoriaclinica.security.TokenJwtConfig.HEADER_AUTHORIZATION;
+import static com.kevin.gestionhistoriaclinica.security.TokenJwtConfig.PREFIX_TOKEN;
+import static com.kevin.gestionhistoriaclinica.security.TokenJwtConfig.SECRET_KEY;
 
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.JwtException;
